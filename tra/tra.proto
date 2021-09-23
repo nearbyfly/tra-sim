@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = "github.com/nearbyfly/tra-sim/tra";
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.tra";
+option java_outer_classname = "TraProto";
+
+package envoy.extensions.filters.network.sip_proxy.tra.v3;
+
+service TraService {
+	rpc nodes(TraRequest) returns (TraResponse) {}
+	rpc subscribe(TraRequest) returns (stream TraResponse) {}
+}
+
+message TraRequest {
+	string fqdn = 1;
+}
+
+message TraResponse {
+	string fqdn = 1;
+	repeated Node nodes = 2;
+}
+
+message Node {
+	string node_id = 1;
+	string ip = 2;
+	uint32 sip_port = 3;
+	uint32 weight = 4;
+}
